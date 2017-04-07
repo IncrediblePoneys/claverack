@@ -1,27 +1,9 @@
 import React, { PropTypes, Component } from 'react'
-import Home from '../home'
-import Menu from '../../components/menu'
-import LoginContainer from '../login'
-import {
-	BrowserRouter as Router,
-	Route
-} from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { registerApp } from '../../utils/api'
 import { registerApp as registerAppAction } from '../../actions/config'
-
-const Routes = () => (
-	<Router>
-		<section>
-			<Menu />
-			<main>
-				<Route exact path="/" component={Home} />
-				<Route path="/login" component={LoginContainer} />
-			</main>
-		</section>
-	</Router>
-)
+import Routes from '../../components/routes'
 
 class App extends Component {
 	componentDidMount () {

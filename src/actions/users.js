@@ -1,10 +1,18 @@
 import {
-	SELECT_USER
+	SELECT,
+	LOGIN
 } from '../constants/users'
 
 export function selectUser(user) {
 	return {
-		type: SELECT_USER,
+		type: SELECT,
+		user
+	}
+}
+
+export function login(user) {
+	return {
+		type : LOGIN,
 		user
 	}
 }

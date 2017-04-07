@@ -1,1 +1,2 @@
-export const SELECT_USER = 'SELECT_USER'
+export const SELECT = 'SELECT'
+export const LOGIN = 'LOGIN'
