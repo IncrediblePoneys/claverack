@@ -5,12 +5,13 @@
 	"private": true,
 	"dependencies": {
 		"electron": "^1.6.2",
-		"foreman": "^2.0.0",
 		"react": "^15.4.2",
 		"react-dom": "^15.4.2"
 	},
 	"devDependencies": {
-		"react-scripts": "0.9.5"
+		"foreman": "^2.0.0",
+		"react-scripts": "0.9.5",
+		"request": "^2.81.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
