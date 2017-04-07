@@ -5,12 +5,15 @@
 	"private": true,
 	"dependencies": {
 		"electron": "^1.6.2",
+		"electron-devtools-installer": "^2.2.0",
 		"react": "^15.4.2",
 		"react-dom": "^15.4.2"
 	},
 	"devDependencies": {
 		"foreman": "^2.0.0",
+		"react-redux": "^5.0.3",
 		"react-scripts": "0.9.5",
+		"redux": "^3.6.0",
 		"request": "^2.81.0"
 	},
 	"scripts": {
@@ -19,7 +22,7 @@
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"electron": "ELECTRON_START_URL=http://localhost:5000 electron .",
-		"dev" : "nf start"
+		"dev": "nf start"
 	},
 	"homepage": "./"
 }

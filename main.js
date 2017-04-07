@@ -14,6 +14,8 @@ const url = require('url')
 let mainWindow
 
 function createWindow() {
+	require('./src/utils/electron-devtools')
+
 	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		width: 800,
