@@ -10,7 +10,7 @@ class LoginContainer extends Component {
 	constructor (props) {
 		super(props)
 
-		this._handleLogin = this.handleLogin.bind(this)
+		this.handleLogin = this.handleLogin.bind(this)
 	}
 
 	handleLogin(credentials) {
@@ -29,7 +29,7 @@ class LoginContainer extends Component {
 	}
 
 	render () {
-		return <Login onLogin={this._handleLogin} />
+		return <Login onLogin={this.handleLogin} />
 	}
 }
 

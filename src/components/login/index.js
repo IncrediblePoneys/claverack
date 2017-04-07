@@ -4,7 +4,7 @@ import { translate } from 'react-i18next'
 class Login extends Component {
 	constructor (props) {
 		super(props)
-		this._handleSubmit = this.handleSubmit.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleSubmit (e) {
@@ -17,7 +17,7 @@ class Login extends Component {
 	render () {
 		const { t } = this.props
 
-		return <form onSubmit={this._handleSubmit}>
+		return <form onSubmit={this.handleSubmit}>
 			<p>
 				<label htmlFor="username">
 					{t('username')}
