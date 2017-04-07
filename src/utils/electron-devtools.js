@@ -12,4 +12,4 @@ module.exports = Promise.all(promises)
 			console.log(`Installed extension ${name}`)
 		})
 	})
-	.catch((err) => console.log('An error occurred: ', err));
+	.catch((err) => console.log('An error occurred: ', err))
