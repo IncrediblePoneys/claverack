@@ -1,12 +1,15 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import Home from '../home'
 import Menu from '../../components/menu'
 import LoginContainer from '../login'
-import { registerApp } from '../../utils/api'
 import {
 	BrowserRouter as Router,
 	Route
 } from 'react-router-dom'
+
+import { connect } from 'react-redux'
+import { registerApp } from '../../utils/api'
+import { registerApp as registerAppAction } from '../../actions/config'
 
 const Routes = () => (
 	<Router>
@@ -22,25 +25,55 @@ const Routes = () => (
 
 class App extends Component {
 	componentDidMount () {
-		Promise.resolve(localStorage.getItem('credentials'))
-			.then(credentials => {
-				if (!credentials) {
-					return registerApp()
-						.then(JSON.stringify)
-						.then(credentials => {
-							localStorage.setItem('credentials', credentials)
-							return credentials
-						})
-				}
-				return credentials
-			})
+		const { setToken, isRegistered } = this.props
+
+		if (!isRegistered) {
+			registerApp()
+				.catch(e => {
+					// How to handle this?
+					// Just display a failed page and don't do anything?
+					// Suggest to relaunch the app?
+					console.error(e)
+					throw e
+				})
+				.then(setToken)
+		}
 	}
+
 	render () {
+		const { isRegistered } = this.props
+
+		if (!isRegistered) {
+			return <div>Loading...</div>
+		}
+
 		return <Routes />
 	}
 }
 
-export default App
+App.propTypes = {
+	isRegistered : PropTypes.bool.isRequired,
+	setToken : PropTypes.func.isRequired
+}
+
+const stateToProps = (state) => {
+	return {
+		isRegistered: state.config.isRegistered
+	}
+}
+
+const dispatchToProps = (dispatch) => {
+	return {
+		setToken: (token) => {
+			dispatch(registerAppAction(token))
+		}
+	}
+}
+
+export default connect(
+	stateToProps,
+	dispatchToProps
+)(App)
 
 /*
 class App extends Component {
