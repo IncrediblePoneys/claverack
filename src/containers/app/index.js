@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { registerApp } from '../../utils/api'
 import { registerApp as registerAppAction } from '../../actions/config'
 import Routes from '../../components/routes'
+import { translate } from 'react-i18next'
 
 class App extends Component {
 	componentDidMount () {
@@ -23,10 +24,12 @@ class App extends Component {
 	}
 
 	render () {
-		const { isRegistered } = this.props
+		const { t, isRegistered } = this.props
 
 		if (!isRegistered) {
-			return <div>Loading...</div>
+			return <div>
+				{t('loading')}
+			</div>
 		}
 
 		return <Routes />
@@ -55,7 +58,7 @@ const dispatchToProps = (dispatch) => {
 export default connect(
 	stateToProps,
 	dispatchToProps
-)(App)
+)(translate()(App))
 
 /*
 class App extends Component {

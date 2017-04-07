@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import { translate } from 'react-i18next'
 
 class Home extends Component {
 	render() {
+		const { t } = this.props
+
 		return <div>
-			Welcome Home 👋
+            {t('welcome')}
 		</div>
 	}
 }
 
-export default Home
+export default translate()(Home)

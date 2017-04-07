@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { translate } from 'react-i18next'
 
 class Login extends Component {
 	constructor (props) {
@@ -14,27 +15,29 @@ class Login extends Component {
 	}
 
 	render () {
+		const { t } = this.props
+
 		return <form onSubmit={this._handleSubmit}>
 			<p>
 				<label htmlFor="username">
-					Username
+					{t('username')}
 				</label>
 				<input id="username" type="text" name="username" />
 			</p>
 			<p>
 				<label htmlFor="password">
-					Password
+					{t('password')}
 				</label>
 				<input id="password" type="password" name="password" />
 			</p>
 			<p>
 				<label htmlFor="instance">
-					Instance
+					{t('instance')}
 				</label>
 				<input id="instance" type="text" name="instance" value="https://mastodon.social" />
 			</p>
 			<button type="submit">
-				Submit
+				{t('submit')}
 			</button>
 		</form>
 	}
@@ -44,4 +47,4 @@ Login.propTypes = {
 	onLogin : PropTypes.func.isRequired
 }
 
-export default Login
+export default translate()(Login)
