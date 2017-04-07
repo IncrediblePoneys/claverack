@@ -7,14 +7,14 @@
 		"electron": "^1.6.2",
 		"electron-devtools-installer": "^2.2.0",
 		"react": "^15.4.2",
-		"react-dom": "^15.4.2"
+		"react-dom": "^15.4.2",
+		"react-router-dom": "^4.0.0",
+		"react-redux": "^5.0.3",
+		"redux": "^3.6.0"
 	},
 	"devDependencies": {
 		"foreman": "^2.0.0",
-		"react-redux": "^5.0.3",
-		"react-scripts": "0.9.5",
-		"redux": "^3.6.0",
-		"request": "^2.81.0"
+		"react-scripts": "0.9.5"
 	},
 	"scripts": {
 		"start": "react-scripts start",

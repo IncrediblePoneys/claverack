@@ -1,15 +1,55 @@
 import React, { Component } from 'react'
-import './App.css'
+import Home from '../home'
+import Menu from '../../components/menu'
+import LoginContainer from '../login'
+import { registerApp } from '../../utils/api'
+import {
+	BrowserRouter as Router,
+	Route
+} from 'react-router-dom'
 
-import { registerApp, login, timeline } from './utils/api'
+const Routes = () => (
+	<Router>
+		<section>
+			<Menu />
+			<main>
+				<Route exact path="/" component={Home} />
+				<Route path="/login" component={LoginContainer} />
+			</main>
+		</section>
+	</Router>
+)
 
+class App extends Component {
+	componentDidMount () {
+		Promise.resolve(localStorage.getItem('credentials'))
+			.then(credentials => {
+				if (!credentials) {
+					return registerApp()
+						.then(JSON.stringify)
+						.then(credentials => {
+							localStorage.setItem('credentials', credentials)
+							return credentials
+						})
+				}
+				return credentials
+			})
+	}
+	render () {
+		return <Routes />
+	}
+}
+
+export default App
+
+/*
 class App extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
 			credentials: null,
-			timeline : null
+			timeline: null
 		}
 
 		this._handleSubmit = this.handleSubmit.bind(this)
@@ -37,7 +77,7 @@ class App extends Component {
 			})
 	}
 
-	handleSubmit (e) {
+	handleSubmit(e) {
 		e.preventDefault()
 
 		const { client_id, client_secret } = JSON.parse(this.state.credentials)
@@ -77,7 +117,7 @@ class App extends Component {
 				</p>
 				<p>
 					<label htmlFor="instance">Instance</label>
-					<input id="instance" type="text" name="instance" value="https://mastodon.social"/>
+					<input id="instance" type="text" name="instance" value="https://mastodon.social" />
 				</p>
 				<input type="submit" value="Submit" />
 			</form>
@@ -91,11 +131,11 @@ class App extends Component {
 					<div>
 						{content}
 					</div>
-					<hr/>
+					<hr />
 				</div>
 			})}
 		</section>
 	}
 }
 
-export default App
+export default App*/
