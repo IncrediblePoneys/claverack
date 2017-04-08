@@ -10,7 +10,8 @@
 	},
 	"parserOptions": {
 		"ecmaFeatures": {
-			"jsx": true
+			"jsx": true,
+			"experimentalObjectRestSpread" : true
 		},
 		"sourceType": "module"
 	},
@@ -25,6 +26,10 @@
 		"semi": [
 			"error",
 			"never"
+		],
+		"eol-last" : [
+			"error",
+			"always"
 		]
 	}
 }
