@@ -15,8 +15,8 @@ class LoginContainer extends Component {
 	}
 
 	handleLogin(credentials) {
-		const { login, token, history } = this.props
-		const { client_id, client_secret } = token
+		const { login, appKeys, history } = this.props
+		const { client_id, client_secret } = appKeys
 
 		credentials.append('client_id', client_id)
 		credentials.append('client_secret', client_secret)
@@ -36,12 +36,12 @@ class LoginContainer extends Component {
 
 LoginContainer.propTypes = {
 	history : PropTypes.object.isRequired,
-	token : PropTypes.object.isRequired
+	appKeys : PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		token : JSON.parse(state.config.token)
+		appKeys : JSON.parse(state.config.appKeys)
 	}
 }
 
