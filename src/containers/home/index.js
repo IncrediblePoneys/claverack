@@ -6,6 +6,7 @@ import {
 	timeline
 } from '../../utils/api'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 class Home extends Component {
 	constructor (props) {
@@ -16,10 +17,16 @@ class Home extends Component {
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		const { user } = this.props
 
 		if (user) {
+			try {
+				const timeline = await timeline(user)
+			} catch (e) {
+				console.info("Handle error properly")
+			}
+
 			timeline(user)
 				.then(timeline => {
 					this.setState(() => {
@@ -71,8 +78,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(
-	mapStateToProps
-)(
-	translate()(Home)
-)
+const translated = translate()(Home)
+const connected = connect(mapStateToProps)(translated)
+const routed = withRouter(connected)
+
+export default routed

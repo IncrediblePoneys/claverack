@@ -3,7 +3,42 @@
 // This has to be a param
 const INSTANCE = 'https://mastodon.social'
 
-export function registerApp () {
+const authenticatedCall = async (method, endpoint, instance, oauth, body = new FormData()) => {
+	const headers = new Headers()
+	headers.append('Authorization', `Bearer ${oauth.access_token}`)
+
+	const params = {
+		method,
+		headers
+	}
+
+	if (method === 'POST') {
+		params.body = body
+	}
+
+	return fetch(`${instance}/${endpoint}`, params)
+		.then(response => response.json())
+		.then(response => {
+			if (response.error) {
+				throw new Error(response.error)
+			}
+
+			return response
+		})
+}
+
+const setupPOST = async (endpoint, instance, body = new FormData()) => {
+	return fetch(`${INSTANCE}/${endpoint}`, {
+		method : 'POST',
+		body
+	})
+		.then(response => response.json())
+}
+
+const GET = authenticatedCall.bind(null, 'GET')
+// const POST = authenticatedCall.bind(null, 'POST')
+
+export async function registerApp (instance = INSTANCE) {
 	const endpoint = 'api/v1/apps'
 	const payload = new FormData()
 	payload.append('client_name', 'Claverack')
@@ -11,11 +46,11 @@ export function registerApp () {
 	payload.append('scopes', 'read write follow')
 	payload.append('website', 'https://github.com/IncrediblePoneys/claverack')
 
-	return fetch(`${INSTANCE}/${endpoint}`, {
-		method : 'POST',
-		body : payload
-	})
-		.then(response => response.json())
+	return await setupPOST(
+		endpoint,
+		instance,
+		payload
+	)
 }
 
 export async function login (payload, { client_id, client_secret }) {
@@ -26,35 +61,25 @@ export async function login (payload, { client_id, client_secret }) {
 	payload.append('client_secret', client_secret)
 	payload.append('grant_type', 'password')
 
-	return fetch(`${instance}/${endpoint}`, {
-		method : 'POST',
-		body : payload
-	})
-		.then(response => response.json())
+	return await setupPOST(
+		endpoint,
+		instance,
+		payload
+	)
 }
 
-export async function verify (user, instance) {
-	const endpoint = 'api/v1/accounts/verify_credentials'
-
-	const headers = new Headers()
-	headers.append('Authorization', `Bearer ${user.access_token}`)
-
-	return fetch(`${instance}/${endpoint}`, {
-		method : 'GET',
-		headers
-	})
-		.then(response => response.json())
+export async function verify (user, instance = INSTANCE) {
+	return await GET(
+		'api/v1/accounts/verify_credentials',
+		instance,
+		user.oauth
+	)
 }
 
-export async function timeline(user) {
-	const endpoint = 'api/v1/timelines/home'
-
-	const headers = new Headers()
-	headers.append('Authorization', `Bearer ${user.access_token}`)
-
-	return fetch(`${INSTANCE}/${endpoint}`, {
-		method : 'GET',
-		headers
-	})
-		.then(response => response.json())
+export async function timeline(user, instance = INSTANCE) {
+	return await GET(
+		'api/v1/timelines/home',
+		instance,
+		user.oauth
+	)
 }
