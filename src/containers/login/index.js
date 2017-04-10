@@ -18,8 +18,8 @@ class LoginContainer extends Component {
 	}
 
 	async handleLogin(credentials) {
-		const { login, token, history } = this.props
-		const { client_id, client_secret } = token
+		const { login, appKeys, history } = this.props
+		const { client_id, client_secret } = appKeys
 
 		try {
 			const oauth = await apiLogin(credentials, { client_id, client_secret })
@@ -42,12 +42,12 @@ class LoginContainer extends Component {
 
 LoginContainer.propTypes = {
 	history : PropTypes.object.isRequired,
-	token : PropTypes.object.isRequired
+	appKeys : PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		token : JSON.parse(state.config.token)
+		appKeys : JSON.parse(state.config.appKeys)
 	}
 }
 

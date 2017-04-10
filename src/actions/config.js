@@ -1,10 +1,10 @@
-import { SET_TOKEN } from '../constants/config'
+import { SET_APPKEYS } from '../constants/config'
 
-export const registerApp = (token) => {
-	token = JSON.stringify(token)
+export const registerApp = (appKeys) => {
+	appKeys = JSON.stringify(appKeys)
 
 	return {
-		type : SET_TOKEN,
-		token
+		type : SET_APPKEYS,
+		appKeys
 	}
 }

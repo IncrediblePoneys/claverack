@@ -9,7 +9,7 @@ import { translate } from 'react-i18next'
 
 class App extends Component {
 	componentDidMount () {
-		const { setToken, isRegistered } = this.props
+		const { setAppKeys, isRegistered } = this.props
 
 		if (!isRegistered) {
 			registerApp()
@@ -20,7 +20,7 @@ class App extends Component {
 					console.error(e)
 					throw e
 				})
-				.then(setToken)
+				.then(setAppKeys)
 		}
 	}
 
@@ -39,19 +39,19 @@ class App extends Component {
 
 App.propTypes = {
 	isRegistered : PropTypes.bool.isRequired,
-	setToken : PropTypes.func.isRequired
+	setAppKeys : PropTypes.func.isRequired
 }
 
 const stateToProps = (state) => {
 	return {
-		isRegistered: state.config.isRegistered
+		isRegistered: Boolean(state.config.appKeys !== null)
 	}
 }
 
 const dispatchToProps = (dispatch) => {
 	return {
-		setToken: (token) => {
-			dispatch(registerAppAction(token))
+		setAppKeys: (appKeys) => {
+			dispatch(registerAppAction(appKeys))
 		}
 	}
 }

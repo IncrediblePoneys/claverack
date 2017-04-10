@@ -38,6 +38,9 @@ const setupPOST = async (endpoint, instance, body = new FormData()) => {
 const GET = authenticatedCall.bind(null, 'GET')
 // const POST = authenticatedCall.bind(null, 'POST')
 
+/* Register Claverack to the user selected instance
+ * @return Object {id, client_id, client_secret}
+ */
 export async function registerApp (instance = INSTANCE) {
 	const endpoint = 'api/v1/apps'
 	const payload = new FormData()
