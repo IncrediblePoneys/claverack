@@ -18,9 +18,13 @@ export function registerApp () {
 		.then(response => response.json())
 }
 
-export function login (payload) {
+export async function login (payload, { client_id, client_secret }) {
 	const endpoint = 'oauth/token'
 	const instance = payload.get('instance')
+
+	payload.append('client_id', client_id)
+	payload.append('client_secret', client_secret)
+	payload.append('grant_type', 'password')
 
 	return fetch(`${instance}/${endpoint}`, {
 		method : 'POST',
@@ -29,7 +33,20 @@ export function login (payload) {
 		.then(response => response.json())
 }
 
-export function timeline(user) {
+export async function verify (user, instance) {
+	const endpoint = 'api/v1/accounts/verify_credentials'
+
+	const headers = new Headers()
+	headers.append('Authorization', `Bearer ${user.access_token}`)
+
+	return fetch(`${instance}/${endpoint}`, {
+		method : 'GET',
+		headers
+	})
+		.then(response => response.json())
+}
+
+export async function timeline(user) {
 	const endpoint = 'api/v1/timelines/home'
 
 	const headers = new Headers()

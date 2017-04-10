@@ -47,7 +47,11 @@ class Home extends Component {
 				const content = (toot.reblog && toot.reblog.content) || toot.content
 
 				return <div key={index}>
-					{content}
+					<div>
+						{toot.account.acct}
+					</div>
+					<div dangerouslySetInnerHTML={{ __html : content}}>
+					</div>
 					<hr/>
 				</div>
 			})}

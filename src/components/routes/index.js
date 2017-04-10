@@ -8,6 +8,12 @@ import {
 	Route
 } from 'react-router-dom'
 
+const Error = () => {
+	return <div>
+		Woupsy woups
+	</div>
+}
+
 export default () => (
 	<Router>
 		<section>
@@ -15,6 +21,7 @@ export default () => (
 			<main>
 				<Route exact path="/" component={Home} />
 				<Route path="/login" component={LoginContainer} />
+				<Route path="/error" component={Error} />
 			</main>
 		</section>
 	</Router>
