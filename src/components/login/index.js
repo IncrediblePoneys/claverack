@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { translate } from 'react-i18next'
+import PropTypes from 'prop-types'
 
 class Login extends Component {
 	constructor (props) {
