@@ -22,20 +22,16 @@ class Home extends Component {
 
 		if (user) {
 			try {
-				const timeline = await timeline(user)
-			} catch (e) {
-				console.info("Handle error properly")
-			}
-
-			timeline(user)
-				.then(timeline => {
-					this.setState(() => {
-						return {
-							loading : false,
-							timeline
-						}
-					})
+				const toots = await timeline(user)
+				this.setState(() => {
+					return {
+						loading: false,
+						timeline: toots
+					}
 				})
+			} catch (e) {
+				console.info("Handle error properly", e)
+			}
 		}
 	}
 
