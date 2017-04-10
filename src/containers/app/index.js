@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
+import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
+
 import { registerApp } from '../../utils/api'
 import { registerApp as registerAppAction } from '../../actions/config'
 import Routes from '../../components/routes'
-import { translate } from 'react-i18next'
+
+import './index.css'
 
 class App extends Component {
 	componentDidMount () {
@@ -28,7 +30,7 @@ class App extends Component {
 		const { t, isRegistered } = this.props
 
 		if (!isRegistered) {
-			return <div>
+			return <div className="claverack">
 				{t('loading')}
 			</div>
 		}

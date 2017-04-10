@@ -5,7 +5,6 @@ import { I18nextProvider } from 'react-i18next'
 import i18n from './utils/i18n'
 import Store from './stores'
 import { Provider } from "react-redux"
-import './index.css'
 
 import App from './containers/app'
 
