@@ -1,23 +1,22 @@
-import { SET_TOKEN } from '../constants/config'
+import { SET_APPKEYS } from '../constants/config'
 
-const STORAGE_TOKEN_KEY = 'token'
+const STORAGE_APPKEYS_KEY = 'appkeys'
 
-const token = localStorage.getItem(STORAGE_TOKEN_KEY)
+const appKeys = localStorage.getItem(STORAGE_APPKEYS_KEY)
 
 const initialState = {
-	token,
-	isRegistered : Boolean(token !== null)
+	appKeys
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case SET_TOKEN:
-			localStorage.setItem(STORAGE_TOKEN_KEY, action.token)
+		case SET_APPKEYS:
+			// save it
+			localStorage.setItem(STORAGE_APPKEYS_KEY, action.appKeys)
 
 			return {
 				...state,
-				token : action.token,
-				isRegistered : true
+				appKeys : action.appKeys
 			}
 		default:
 			return state

@@ -3,6 +3,9 @@
 // This has to be a param
 const INSTANCE = 'https://mastodon.social'
 
+/* Register Claverack to the user selected instance
+ * @return Object {id, client_id, client_secret}
+ */
 export function registerApp () {
 	const endpoint = 'api/v1/apps'
 	const payload = new FormData()
