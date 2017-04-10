@@ -16,13 +16,11 @@ const Error = () => {
 
 export default () => (
 	<Router>
-		<section>
-			<Menu />
-			<main>
-				<Route exact path="/" component={Home} />
-				<Route path="/login" component={LoginContainer} />
-				<Route path="/error" component={Error} />
-			</main>
-		</section>
+		<div className="claverack">
+			<Route path="/" component={Menu} />
+			<Route path="/login" component={LoginContainer} />
+			<Route exact path="/" component={Home} />
+			<Route path="/error" component={Error} />
+		</div>
 	</Router>
 )

@@ -1,0 +1,22 @@
+* {
+	box-sizing: border-box;
+}
+html, body {
+	background-color: #212121;
+	margin: 0;
+	padding: 0;
+	color: #ccc;
+	height: 100%;
+}
+
+a {
+	color: #ccc;
+}
+
+
+/* Main container */
+#root{height: 100%;}
+.claverack {
+	display: flex;
+	height: 100%;
+}
