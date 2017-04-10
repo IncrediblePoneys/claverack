@@ -1,5 +1,5 @@
 // Word of ⚠️
-// If you are under age or don't like seeing ugly things, please don't read this file.
+// If you are underage or don't like seeing ugly things, please don't read this file.
 // thanks, ❤️
 
 // but really though, there's no API for that right now so I decided to go the dirty way.
