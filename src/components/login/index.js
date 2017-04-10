@@ -9,8 +9,7 @@ class Login extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.state = {
 			loading : true,
-			instances : [],
-			suggestions : []
+			instances : []
 		}
 	}
 
@@ -25,7 +24,7 @@ class Login extends Component {
 	handleSubmit (e) {
 		e.preventDefault()
 
-		const { onLogin } = this.props	
+		const { onLogin } = this.props
 		onLogin(new FormData(e.target))
 	}
 
