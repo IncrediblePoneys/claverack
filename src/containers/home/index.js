@@ -8,6 +8,8 @@ import {
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
+import Toot from '../../components/toot'
+
 class Home extends Component {
 	constructor (props) {
 		super(props)
@@ -47,16 +49,7 @@ class Home extends Component {
 
 		return <div>
 			{timeline.map((toot, index) => {
-				const content = (toot.reblog && toot.reblog.content) || toot.content
-
-				return <div key={index}>
-					<div>
-						{toot.account.acct}
-					</div>
-					<div dangerouslySetInnerHTML={{ __html : content}}>
-					</div>
-					<hr/>
-				</div>
+				return <Toot {...toot} key={index} />
 			})}
 		</div>
 	}

@@ -17,7 +17,8 @@
 	"devDependencies": {
 		"electron-devtools-installer": "^2.2.0",
 		"foreman": "^2.0.0",
-		"react-scripts": "0.9.5"
+		"react-scripts": "0.9.5",
+		"eslint-plugin-react": "^6.10.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",
