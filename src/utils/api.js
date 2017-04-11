@@ -38,7 +38,10 @@ const setupPOST = async (endpoint, instance, body = new FormData()) => {
 const GET = authenticatedCall.bind(null, 'GET')
 // const POST = authenticatedCall.bind(null, 'POST')
 
-/* Register Claverack to the user selected instance
+/**
+ *
+ * @description Register Claverack to the user selected instance
+ * @param {String} instance A mastodon instance
  * @return Object {id, client_id, client_secret}
  */
 export async function registerApp (instance = INSTANCE) {
@@ -56,21 +59,33 @@ export async function registerApp (instance = INSTANCE) {
 	)
 }
 
-export async function login (payload, { client_id, client_secret }) {
+/**
+ * @description Logs the user with the given credentials
+ * @param {FormData} credentials User credentials
+ * @param {Object} appKeys (obtained from a registerApp call to the API)
+ * @return {Object} Oauth keys for a user
+ */
+export async function login (credentials, { client_id, client_secret }) {
 	const endpoint = 'oauth/token'
-	const instance = payload.get('instance')
+	const instance = credentials.get('instance')
 
-	payload.append('client_id', client_id)
-	payload.append('client_secret', client_secret)
-	payload.append('grant_type', 'password')
+	credentials.append('client_id', client_id)
+	credentials.append('client_secret', client_secret)
+	credentials.append('grant_type', 'password')
 
 	return await setupPOST(
 		endpoint,
 		instance,
-		payload
+		credentials
 	)
 }
 
+/**
+ * @description User verification with the given mastodon instance
+ * @param {Object} oauth appKeys
+ * @param {String} instance A mastodon instance url
+ * @return {Object} User informations
+ */
 export async function verify (oauth, instance = INSTANCE) {
 	return await GET(
 		'api/v1/accounts/verify_credentials',
@@ -79,6 +94,12 @@ export async function verify (oauth, instance = INSTANCE) {
 	)
 }
 
+/**
+ *
+ * @param {Object} oauth user oauth tokens
+ * @param {String} instance A mastodon instance url
+ * @return {Object[]} A list of toots
+ */
 export async function timeline(oauth, instance = INSTANCE) {
 	return await GET(
 		'api/v1/timelines/home',
