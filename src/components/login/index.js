@@ -6,6 +6,9 @@ import { getInstances } from '../../utils/instances'
 import logo from '../../img/logo.png'
 import './index.css'
 
+import logo from '../../img/logo.png'
+import './index.css'
+
 class Login extends Component {
 	constructor (props) {
 		super(props)
