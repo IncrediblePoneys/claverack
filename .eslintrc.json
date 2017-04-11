@@ -31,6 +31,9 @@
 		"eol-last" : [
 			"error",
 			"always"
+		],
+		"react/jsx-uses-vars": [
+			2
 		]
 	}
 }
