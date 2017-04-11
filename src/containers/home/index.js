@@ -6,6 +6,7 @@ import {
 	timeline
 } from '../../utils/api'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 class Home extends Component {
 	constructor (props) {
@@ -16,19 +17,21 @@ class Home extends Component {
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		const { user } = this.props
 
 		if (user) {
-			timeline(user)
-				.then(timeline => {
-					this.setState(() => {
-						return {
-							loading : false,
-							timeline
-						}
-					})
+			try {
+				const toots = await timeline(user.oauth)
+				this.setState(() => {
+					return {
+						loading: false,
+						timeline: toots
+					}
 				})
+			} catch (e) {
+				console.info("Handle error properly", e)
+			}
 		}
 	}
 
@@ -47,7 +50,11 @@ class Home extends Component {
 				const content = (toot.reblog && toot.reblog.content) || toot.content
 
 				return <div key={index}>
-					{content}
+					<div>
+						{toot.account.acct}
+					</div>
+					<div dangerouslySetInnerHTML={{ __html : content}}>
+					</div>
 					<hr/>
 				</div>
 			})}
@@ -67,8 +74,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(
-	mapStateToProps
-)(
-	translate()(Home)
-)
+const translated = translate()(Home)
+const connected = connect(mapStateToProps)(translated)
+const routed = withRouter(connected)
+
+export default routed
