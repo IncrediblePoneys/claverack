@@ -55,11 +55,7 @@ class Login extends Component {
 				<label htmlFor="instance">
 					{t('instance')}
 				</label>
-				<input
-					name="instance"
-					list="instances"
-					value="https://mastodon.social"
-				/>
+				<input name="instance" list="instances" />
 				<datalist id="instances">
 					{instances.map((instance, index) => {
 						return <option key={index}>
