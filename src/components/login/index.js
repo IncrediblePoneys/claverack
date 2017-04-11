@@ -11,7 +11,7 @@ class Login extends Component {
 	handleSubmit (e) {
 		e.preventDefault()
 
-		const { onLogin } = this.props	
+		const { onLogin } = this.props
 		onLogin(new FormData(e.target))
 	}
 
