@@ -71,18 +71,18 @@ export async function login (payload, { client_id, client_secret }) {
 	)
 }
 
-export async function verify (user, instance = INSTANCE) {
+export async function verify (oauth, instance = INSTANCE) {
 	return await GET(
 		'api/v1/accounts/verify_credentials',
 		instance,
-		user.oauth
+		oauth
 	)
 }
 
-export async function timeline(user, instance = INSTANCE) {
+export async function timeline(oauth, instance = INSTANCE) {
 	return await GET(
 		'api/v1/timelines/home',
 		instance,
-		user.oauth
+		oauth
 	)
 }

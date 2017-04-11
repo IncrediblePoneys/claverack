@@ -22,7 +22,7 @@ class Home extends Component {
 
 		if (user) {
 			try {
-				const toots = await timeline(user)
+				const toots = await timeline(user.oauth)
 				this.setState(() => {
 					return {
 						loading: false,
