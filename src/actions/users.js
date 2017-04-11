@@ -10,9 +10,10 @@ export function selectUser(user) {
 	}
 }
 
-export function login(user) {
+export function login({ user, oauth }) {
 	return {
 		type : LOGIN,
-		user
+		user,
+		oauth
 	}
 }

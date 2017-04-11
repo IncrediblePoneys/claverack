@@ -9,7 +9,7 @@ const users = JSON.parse(localStorage.getItem(USERS_KEY)) || {}
 
 const initialState = {
 	selected: users.selected === undefined ? null : users.selected,
-	accounts: users.accounts || []
+	accounts: users.accounts || {}
 }
 
 export default (state = initialState, action) => {
@@ -20,21 +20,29 @@ export default (state = initialState, action) => {
 				selected : action.user
 			}
 		case LOGIN:
-			let accounts = state.accounts.concat(action.user)
+			// Receives user, oauth
+			if (state.accounts[action.user.url]) {
+				return {
+					...state,
+					selected : action.user.url
+				}
+			}
 
 			const newState = {
 				...state,
-				accounts,
-				selected : accounts.length - 1
+				accounts: {
+					...state.accounts,
+					[action.user.url]: {
+						user: action.user,
+						oauth: action.oauth
+					}, },
+				selected : action.user.url
 			}
 
-			localStorage.setItem(USERS_KEY, JSON.stringify({
-				accounts : newState.accounts,
-				selected : newState.selected
-			}))
+			localStorage.setItem(USERS_KEY, JSON.stringify(newState))
 
 			return newState
 		default:
 			return state
 	}
-} 
+}
