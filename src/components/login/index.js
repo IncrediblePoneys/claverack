@@ -48,9 +48,9 @@ class Login extends Component {
 						<form onSubmit={this.handleSubmit}>
 							<p>
 								<label htmlFor="email">
-									{t('email', 'capitalize')}
+									{t('Email')}
 								</label>
-								<input id="email" type="text" name="email" />
+								<input id="email" type="text" name="username" />
 							</p>
 							<p>
 								<label htmlFor="password">
