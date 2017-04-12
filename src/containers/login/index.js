@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import Login from '../../components/login'
 
 import { connect } from 'react-redux'
-import { login } from '../../actions/users'
+import { login as loginAction } from '../../actions/users'
 import {
 	verify,
-	login as apiLogin
+	login as loginApi
 } from '../../utils/api'
 import { withRouter } from 'react-router'
 
@@ -18,14 +18,14 @@ class LoginContainer extends Component {
 	}
 
 	async handleLogin(credentials) {
-		const { login, appKeys, history } = this.props
+		const { loginDispatch, appKeys, history } = this.props
 		const { client_id, client_secret } = appKeys
 
 		try {
-			const oauth = await apiLogin(credentials, { client_id, client_secret })
+			const oauth = await loginApi(credentials, { client_id, client_secret })
 			const user = await verify(oauth, credentials.get('instance'))
 
-			login({ oauth, user })
+			loginDispatch({ oauth, user })
 			history.push('/')
 		} catch (e) {
 			// What to do with this?
@@ -42,7 +42,8 @@ class LoginContainer extends Component {
 
 LoginContainer.propTypes = {
 	history : PropTypes.object.isRequired,
-	appKeys : PropTypes.object.isRequired
+	appKeys : PropTypes.object.isRequired,
+	loginDispatch : PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -53,8 +54,8 @@ const mapStateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
 	return {
-		login : (user) => {
-			dispatch(login(user))
+		loginDispatch : (user) => {
+			dispatch(loginAction(user))
 		}
 	}
 }

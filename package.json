@@ -16,8 +16,10 @@
 	},
 	"devDependencies": {
 		"electron-devtools-installer": "^2.2.0",
+		"eslint-plugin-react": "^6.10.3",
 		"foreman": "^2.0.0",
-		"react-scripts": "0.9.5"
+		"react-scripts": "0.9.5",
+		"redux-logger": "^3.0.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",

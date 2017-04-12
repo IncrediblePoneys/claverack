@@ -8,27 +8,17 @@ import {
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-class Home extends Component {
-	constructor (props) {
-		super(props)
-		this.state = {
-			loading: true,
-			timeline : null
-		}
-	}
+import Toot from '../../components/toot'
 
+import { addToots as addTootsAction } from '../../actions/timeline'
+
+class Home extends Component {
 	async componentDidMount() {
-		const { user } = this.props
+		const { user, addToots } = this.props
 
 		if (user) {
 			try {
-				const toots = await timeline(user.oauth)
-				this.setState(() => {
-					return {
-						loading: false,
-						timeline: toots
-					}
-				})
+				addToots(await timeline(user.oauth))
 			} catch (e) {
 				console.info("Handle error properly", e)
 			}
@@ -36,46 +26,48 @@ class Home extends Component {
 	}
 
 	render() {
-		const { t } = this.props
-		const { loading, timeline } = this.state
+		const { t, toots } = this.props
+		const isLoading = Boolean(toots.length) === false
 
-		if (loading) {
+		if (isLoading) {
 			return <div>
 				{t('loading')}
 			</div>
 		}
 
 		return <div>
-			{timeline.map((toot, index) => {
-				const content = (toot.reblog && toot.reblog.content) || toot.content
-
-				return <div key={index}>
-					<div>
-						{toot.account.acct}
-					</div>
-					<div dangerouslySetInnerHTML={{ __html : content}}>
-					</div>
-					<hr/>
-				</div>
+			{toots.map((toot, index) => {
+				return <Toot {...toot} key={index} />
 			})}
 		</div>
 	}
 }
 
 Home.propTypes = {
-	user : PropTypes.object.isRequired
+	user : PropTypes.object.isRequired,
+	toots : PropTypes.array.isRequired,
+	addToots : PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
 	const { selected, accounts } = state.users
 
 	return {
-		user : accounts[selected]
+		user : accounts[selected],
+		toots : state.timeline
+	}
+}
+
+const dispatchToProps = (dispatch) => {
+	return {
+		addToots : (toots) => {
+			return dispatch(addTootsAction(toots))
+		}
 	}
 }
 
 const translated = translate()(Home)
-const connected = connect(mapStateToProps)(translated)
+const connected = connect(mapStateToProps, dispatchToProps)(translated)
 const routed = withRouter(connected)
 
 export default routed
