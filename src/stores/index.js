@@ -15,3 +15,22 @@ export default createStore(
 	window.devToolsExtension && window.devToolsExtension(),
 	applyMiddleware(logger)
 )
+
+
+/*
+
+{
+	users: [],
+	config: {
+		appKeys: [
+			{
+				key,
+				secret
+			}
+		]
+	}
+	timeline: [
+		{toots}
+	]
+}
+ */

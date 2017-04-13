@@ -10,9 +10,11 @@ class Login extends Component {
 	constructor (props) {
 		super(props)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleInstanceChange = this.handleInstanceChange.bind(this)
 		this.state = {
-			loading : true,
-			instances : []
+			loading: true,
+			instances: [],
+			canLogin: false
 		}
 	}
 
@@ -24,8 +26,22 @@ class Login extends Component {
 		})
 	}
 
+	async handleInstanceChange (event) {
+		const { registerAppForInstance } = this.props
+		const instance = event.target.value
+
+		this.setState({ canLogin: false })
+		if (instance) {
+			await registerAppForInstance(event.target.value)
+			this.setState({ canLogin: true })
+		}
+	}
+
 	handleSubmit (e) {
 		e.preventDefault()
+		if (!this.state.canLogin) {
+			return
+		}
 
 		const { onLogin } = this.props
 		onLogin(new FormData(e.target))
@@ -47,35 +63,38 @@ class Login extends Component {
 						<img className="login-logo" src={logo} alt="Logo" />
 						<form onSubmit={this.handleSubmit}>
 							<p>
-								<label htmlFor="email">
-									{t('Email')}
-								</label>
-								<input id="email" type="text" name="username" />
-							</p>
-							<p>
-								<label htmlFor="password">
-									{t('password')}
-								</label>
-								<input id="password" type="password" name="password" />
-							</p>
-							<p>
 								<label htmlFor="instance">
 									{t('instance')}
 								</label>
-								<input name="instance" list="instances" />
-								<datalist id="instances">
+								<select onChange={this.handleInstanceChange} name="instance" id="instances">
+									<option value="">{t('pickone')}</option>
 									{instances.map((instance, index) => {
 										return <option key={index}>
 											{instance}
 										</option>
 									})}
-								</datalist>
+								</select>
 							</p>
-							<p className="login-submit">
-								<button type="submit">
-									{t('submit')}
-								</button>
-							</p>
+							{this.state.canLogin && <div>
+									<p>
+										<label htmlFor="email">
+											{t('Email')}
+										</label>
+										<input id="email" type="text" name="username" />
+									</p>
+									<p>
+										<label htmlFor="password">
+											{t('password')}
+										</label>
+										<input id="password" type="password" name="password" />
+									</p>
+									<p className="login-submit">
+										<button type="submit">
+											{t('submit')}
+										</button>
+									</p>
+								</div>
+							}
 						</form>
 					</div>
 				</div>
@@ -83,7 +102,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-	onLogin : PropTypes.func.isRequired
+	onLogin: PropTypes.func.isRequired,
+	registerAppForInstance: PropTypes.func.isRequired
 }
 
 export default translate()(Login)
