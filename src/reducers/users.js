@@ -35,7 +35,8 @@ export default (state = initialState, action) => {
 					[action.user.url]: {
 						user: action.user,
 						oauth: action.oauth
-					}, },
+					},
+				},
 				selected : action.user.url
 			}
 

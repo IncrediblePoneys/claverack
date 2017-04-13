@@ -20,7 +20,7 @@ const toot = {
 	id : PropTypes.number.isRequired,
 	account : PropTypes.object,
 	content : PropTypes.string,
-	visibility : PropTypes.string.isRequired,
+	visibility : PropTypes.string,
 	application : PropTypes.object,
 	spoiler_text : PropTypes.string.isRequired
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from '../../containers/home'
+import Main from '../../containers/main'
 import LoginContainer from '../../containers/login'
 import Menu from '../menu'
 
@@ -18,11 +18,9 @@ export default () => (
 	<Router>
 		<section>
 			<Menu />
-			<main>
-				<Route exact path="/" component={Home} />
-				<Route path="/login" component={LoginContainer} />
-				<Route path="/error" component={Error} />
-			</main>
+			<Route exact path="/" component={Main} />
+			<Route path="/login" component={LoginContainer} />
+			<Route path="/error" component={Error} />
 		</section>
 	</Router>
 )
