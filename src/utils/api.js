@@ -100,10 +100,18 @@ export async function verify (oauth, instance = INSTANCE) {
  * @param {String} instance A mastodon instance url
  * @return {Object[]} A list of toots
  */
-export async function timeline(oauth, instance = INSTANCE) {
+export async function timeline(oauth, route, instance = INSTANCE) {
 	return await GET(
-		'api/v1/timelines/home',
+		`api/v1/timelines/${route}`,
 		instance,
 		oauth
 	)
+}
+
+export async function fetchAllTheToots(oauth, instance = INSTANCE) {
+	return await Promise.all([
+		timeline(oauth, 'home', instance),
+		timeline(oauth, 'public', instance),
+		timeline(oauth, 'public?local=true', instance)
+	])
 }
