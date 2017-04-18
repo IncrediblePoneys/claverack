@@ -1,0 +1,22 @@
+.toot{
+  display: flex;
+  background-color: #424242;
+  padding: 5px;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+.toot-avatar {
+  padding:3px 7px 0 0;
+}
+
+.toot-avatar img {
+  border-radius: 2px;
+  width: 70px;
+}
+
+.toot-date {
+  font-size: 12px;
+  display: inline-block;
+  margin-left: 10px;
+}

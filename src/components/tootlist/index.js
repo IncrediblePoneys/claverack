@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+
 import Toot from '../toot'
+import './styles.css'
 
 class Tootlist extends PureComponent {
 	render () {
 		const { toots, name } = this.props
 
-		return <div className="cl-timeline" data-name={name}>
+		return <div className="tootlist">
+			<h2>{name}</h2>
 			{toots.map((toot, index) => {
 				return <Toot key={index} {...toot} />
 			})}
