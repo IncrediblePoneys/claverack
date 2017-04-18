@@ -1,26 +1,9 @@
 import { ADD_TOOTS } from '../constants/toots'
 
-const initialState = {
-	home : {
-		// isLoading ?
-		items : []
-	},
-	local : {
-		// isLoading ?
-		items : []
-	},
-	federated : {
-		// isLoading ?
-		items : []
-	}
-}
+const initialState = {}
 
-function normalizeToots(timeline, state, toots) {
-	const currentToots = state[timeline].items
-
-	return {
-		items : toots.map(toot => toot.id).concat(currentToots)
-	}
+function normalizeToots(newtoots, oldToots) {
+	return newtoots.map(toot => toot.id).concat(oldToots)
 }
 
 /**
@@ -28,22 +11,25 @@ function normalizeToots(timeline, state, toots) {
  * The toots are normalized into ids.
  * The whole toot data is stored under the `toots` key of the store
  * @param {Object} state the current state
- * @param {Object} toots An object with items by timelines like follows:
- * { home : [], local : [], federated : []}
+ * @param {Array} toots An array with the toots
+ * @param {String} timeline The type of timeline we're dealing with (home/local/federated)
+ * @param {String} accountUrl	The account we're using
  */
-function addTootsToTimeline(state, { home = [], local = [], federated = [] }) {
+function addTootsToTimeline(state, toots, timeline, accountUrl) {
+	const accounTimelines = state[accountUrl] || {}
 	return {
 		...state,
-		home : normalizeToots('home', state, home),
-		local : normalizeToots('local', state, local),
-		federated : normalizeToots('federated', state, federated)
+		[accountUrl]: {
+			...accounTimelines,
+			[timeline]: normalizeToots(toots, accounTimelines[timeline] || [])
+		}
 	}
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_TOOTS:
-			return addTootsToTimeline(state, action.toots)
+			return addTootsToTimeline(state, action.toots, action.timeline, action.accountUrl)
 		default:
 			return state
 	}

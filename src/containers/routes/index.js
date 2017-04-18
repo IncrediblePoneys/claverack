@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import Login from '../../containers/login'
 import Menu from '../../containers/menu'
-import Timeline from '../../containers/timeline'
+import Main from '../../containers/main'
 
 const Error = () => {
 	return <div>
@@ -17,7 +17,7 @@ export default () => (
 			<Menu />
 			<Route path="/login" component={Login} />
 			<Route path="/error" component={Error} />
-			<Route path="/timeline/:accountUrl" component={Timeline} />
+			<Route exact path="/" component={Main} />
 		</div>
 	</BrowserRouter>
 )

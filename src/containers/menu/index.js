@@ -21,7 +21,7 @@ class Menu extends Component {
 			let user = users.accounts[url].user
 			usersLinks.push(
 				<li key={url}>
-					<Link to={`/timeline/${encodeURIComponent(url)}`}>
+					<Link to="/">
 						<img width="40" height="40" alt={url} src={user.avatar} />
 					</Link>
 				</li>
@@ -33,7 +33,7 @@ class Menu extends Component {
 				{usersLinks}
 				<li>
 					<Link to="/login">
-						{t('logins')}
+						{t('login')}
 					</Link>
 				</li>
 			</ul>
