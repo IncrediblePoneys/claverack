@@ -1,9 +1,13 @@
+/*.toot a{ display: none;}*/
 .toot{
   display: flex;
   background-color: #424242;
   padding: 5px;
   flex-direction: row;
   margin-bottom: 6px;
+  word-break: break-word;
+  border-radius: 2px;
+  color: #fff;
 }
 
 .toot-avatar {
@@ -11,8 +15,8 @@
 }
 
 .toot-avatar img {
-  border-radius: 2px;
-  width: 70px;
+  border-radius: 50px;
+  width: 50px;
 }
 
 .toot-date {

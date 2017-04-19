@@ -7,7 +7,7 @@ import { translate } from 'react-i18next'
 import Timeline from '../timeline'
 import { saveLayout as saveLayoutAction } from '../../actions/config'
 
-import Styles from './styles'
+import './index.css'
 
 const components = {
   timeline: Timeline
@@ -15,25 +15,15 @@ const components = {
 
 class Main extends Component {
 
-  componentDidMount() {
-    const { layout, currentAccount, saveLayout } = this.props
-    if (layout.length === 0 && currentAccount) {
-      saveLayout([{
-        component: 'timeline',
-        type: 'home',
-        accountUrl: currentAccount.user.url
-      }])
-    }
-  }
-
   render () {
-    let columns = []
-    this.props.layout.map(column => {
+    const { layout, currentAccount, match } = this.props
+    let columns = [<Timeline type={match.params.component} accountUrl={currentAccount.user.url} />]
+    layout.map(column => {
       const Component = components[column.component]
       columns.push(<Component {...column} />)
     })
 
-    return <main style={Styles.main}>
+    return <main className="main">
       {columns}
     </main>
   }

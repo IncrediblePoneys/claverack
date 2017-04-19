@@ -17,7 +17,7 @@ export default () => (
 			<Menu />
 			<Route path="/login" component={Login} />
 			<Route path="/error" component={Error} />
-			<Route exact path="/" component={Main} />
+			<Route path="/main/:component" component={Main} />
 		</div>
 	</BrowserRouter>
 )

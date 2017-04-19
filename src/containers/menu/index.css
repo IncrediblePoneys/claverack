@@ -1,0 +1,15 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  align-items: center;
+}
+
+.menu .material-icons {
+  font-size: 36px;
+}
+
+.menu-avatar {
+  width: 60px;
+  border-radius: 60px;
+}

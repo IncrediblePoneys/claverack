@@ -3,7 +3,8 @@ import { ADD_TOOTS } from '../constants/toots'
 const initialState = {}
 
 function normalizeToots(newtoots, oldToots) {
-	return newtoots.map(toot => toot.id).concat(oldToots)
+	// TODO / FIXME this is ugly.
+	return [...new Set(newtoots.map(toot => toot.id).concat(oldToots))]
 }
 
 /**
@@ -16,14 +17,13 @@ function normalizeToots(newtoots, oldToots) {
  * @param {String} accountUrl	The account we're using
  */
 function addTootsToTimeline(state, toots, timeline, accountUrl) {
-	const accounTimelines = state[accountUrl] || {}
-	return {
-		...state,
-		[accountUrl]: {
-			...accounTimelines,
-			[timeline]: normalizeToots(toots, accounTimelines[timeline] || [])
-		}
-	}
+	const oldTimelines = state[accountUrl] || {}
+	const newTimelines = Object.assign(
+		{},
+		oldTimelines,
+		{[timeline]: normalizeToots(toots, oldTimelines[timeline] || [])}
+	)
+	return Object.assign({}, state, {[accountUrl]: newTimelines})
 }
 
 export default (state = initialState, action) => {

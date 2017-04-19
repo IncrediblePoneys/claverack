@@ -11,11 +11,8 @@ const initialState = {}
  */
 function addToots(state, toots, instanceUrl) {
 	toots = toots.map(toot => [toot.id, toot])
-	const merged = new Map(...state[instanceUrl] || [], toots)
-	return {
-		...state,
-		[instanceUrl]: merged
-	}
+	const merged = new Map([...state[instanceUrl] || [], ...toots])
+	return Object.assign({}, state, {[instanceUrl]: merged})
 }
 
 export default (state = initialState, action) => {
