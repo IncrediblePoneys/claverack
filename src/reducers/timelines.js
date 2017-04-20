@@ -4,6 +4,8 @@ const initialState = {}
 
 function normalizeToots(newtoots, oldToots) {
 	// TODO / FIXME this is ugly.
+	// For now we avoid toot duplication by creating a Set then casting it
+	// as an array, but this should probably be handled by the api call (sinceid XXX)
 	return [...new Set(newtoots.map(toot => toot.id).concat(oldToots))]
 }
 
