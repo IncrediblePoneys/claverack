@@ -34,7 +34,7 @@ Timeline.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   const { accountUrl } = ownProps
-  const toots = state.timelines[accountUrl] && ownProps.type && state.timelines[accountUrl][ownProps.type] || []
+  const toots = (state.timelines[accountUrl] && ownProps.type && state.timelines[accountUrl][ownProps.type]) || []
   return {
     account: state.users.accounts[accountUrl],
     toots: toots.map(toot => state.toots[accountUrlToInstanceUrl(accountUrl)].get(toot))

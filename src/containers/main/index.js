@@ -10,44 +10,46 @@ import { saveLayout as saveLayoutAction } from '../../actions/config'
 import './index.css'
 
 const components = {
-  timeline: Timeline
+	timeline: Timeline
 }
 
 class Main extends Component {
 
-  render () {
-    const { layout, currentAccount, match } = this.props
-    let columns = [<Timeline type={match.params.component} accountUrl={currentAccount.user.url} />]
-    layout.map(column => {
-      const Component = components[column.component]
-      columns.push(<Component {...column} />)
-    })
+	render () {
+		const { layout, currentAccount, match } = this.props
+		const columns = [
+			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} />,
+			...layout.map((column) => {
+				const Component = components[column.component]
+				return <Component {...column} />
+			})
+		]
 
-    return <main className="main">
-      {columns}
-    </main>
-  }
+		return <main className="main">
+			{columns}
+		</main>
+	}
 }
 
 Main.propTypes = {
-  currentAccount: PropTypes.object.isRequired
+	currentAccount: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
-  const { selected, accounts } = state.users
+	const { selected, accounts } = state.users
 
-  return {
-    layout: state.config.layout,
-    currentAccount: accounts[selected]
-  }
+	return {
+		layout: state.config.layout,
+		currentAccount: accounts[selected]
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    saveLayout : (layout) => {
-      return dispatch(saveLayoutAction(layout))
-    }
-  }
+	return {
+		saveLayout : (layout) => {
+			return dispatch(saveLayoutAction(layout))
+		}
+	}
 }
 
 const translated = translate()(Main)

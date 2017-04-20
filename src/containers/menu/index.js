@@ -16,7 +16,7 @@ class Menu extends Component {
 	}
 
 	render () {
-		const { t, currentAccount } = this.props
+		const { currentAccount } = this.props
 		return <nav className="menu">
 			<img className="menu-avatar" alt={currentAccount.user.display_name} src={currentAccount.user.avatar} />
 				<Link to="/main/home">
@@ -42,4 +42,6 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default translate()(withRouter(connect(mapStateToProps)(Menu)))
+const connected = connect(mapStateToProps)(Menu)
+const routed = withRouter(connected)
+export default translate(routed)()
