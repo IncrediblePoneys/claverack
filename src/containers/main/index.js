@@ -18,10 +18,10 @@ class Main extends Component {
 	render () {
 		const { layout, currentAccount, match } = this.props
 		const columns = [
-			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} />,
-			...layout.map((column) => {
+			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} key={'main'} />,
+			...layout.map((column, index) => {
 				const Component = components[column.component]
-				return <Component {...column} />
+				return <Component key={index} {...column} />
 			})
 		]
 
