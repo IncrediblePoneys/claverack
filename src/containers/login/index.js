@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Login from '../../components/login'
-
 import { connect } from 'react-redux'
-import { login as loginAction } from '../../actions/users'
-import {
-	verify,
-	login as loginApi
-} from '../../utils/api'
 import { withRouter } from 'react-router'
+
+import Login from '../../components/login'
+import { login as loginAction } from '../../actions/users'
+import { verify, login as loginApi } from '../../utils/api'
+import { registerApp as registerAppApi } from '../../utils/api'
+import { registerApp as registerAppAction } from '../../actions/config'
 
 class LoginContainer extends Component {
 	constructor (props) {
 		super(props)
 
 		this.handleLogin = this.handleLogin.bind(this)
+		this.registerAppForInstance = this.registerAppForInstance.bind(this)
 	}
+
 
 	async handleLogin(credentials) {
 		const { loginDispatch, appKeys, history } = this.props
-		const { client_id, client_secret } = appKeys
+		const instance = credentials.get('instance')
+		const { client_id, client_secret } = appKeys[instance]
 
 		try {
 			const oauth = await loginApi(credentials, { client_id, client_secret })
@@ -35,8 +37,22 @@ class LoginContainer extends Component {
 		}
 	}
 
+	// Register claverack to selected instance
+	// Or use already created keys
+	async registerAppForInstance(instance) {
+		const { setAppKeys, appKeys } = this.props
+
+		if (appKeys[instance]) {
+			return appKeys[instance]
+		} else {
+			let newAppKeys = await registerAppApi(instance)
+			setAppKeys(newAppKeys, instance)
+			return newAppKeys
+		}
+	}
+
 	render () {
-		return <Login onLogin={this.handleLogin} />
+		return <Login onLogin={this.handleLogin} registerAppForInstance={this.registerAppForInstance} />
 	}
 }
 
@@ -48,7 +64,7 @@ LoginContainer.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		appKeys : JSON.parse(state.config.appKeys)
+		appKeys: state.config.appKeys
 	}
 }
 
@@ -56,6 +72,10 @@ const dispatchToProps = (dispatch) => {
 	return {
 		loginDispatch : (user) => {
 			dispatch(loginAction(user))
+		},
+
+		setAppKeys: (appKeys, instance) => {
+			dispatch(registerAppAction(appKeys, instance))
 		}
 	}
 }

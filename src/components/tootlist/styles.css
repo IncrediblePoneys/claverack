@@ -1,0 +1,32 @@
+.tootlist{
+	margin-right: 10px;
+	flex-basis: 120px;
+	flex: 1;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.tootlist h2 {
+	margin: 4px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.tootlist-toots {
+	overflow: auto;
+}
+
+.tootlist-toots::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+	background-color: #1b1b1b; 
+}
+
+.tootlist-toots::-webkit-scrollbar-thumb {
+	background-color: #424242; 
+	border-radius: 6px;
+	border-left: 2px solid #1b1b1b;
+}

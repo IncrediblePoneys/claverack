@@ -1,10 +1,12 @@
-import { SET_APPKEYS } from '../constants/config'
+import { SET_APPKEYS, SAVE_LAYOUT } from '../constants/config'
 
-export const registerApp = (appKeys) => {
-	appKeys = JSON.stringify(appKeys)
+export const registerApp = (appKeys, instance) => ({
+  type : SET_APPKEYS,
+  appKeys,
+  instance
+})
 
-	return {
-		type : SET_APPKEYS,
-		appKeys
-	}
-}
+export const saveLayout = (layout) => ({
+  type: SAVE_LAYOUT,
+  layout
+})

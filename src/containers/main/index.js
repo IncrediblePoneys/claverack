@@ -1,87 +1,59 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
-
-import { fetchAllTheToots } from '../../utils/api'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 
-import { addToots as addTootsAction } from '../../actions/toots'
+import Timeline from '../timeline'
+import { saveLayout as saveLayoutAction } from '../../actions/config'
 
-import Timeline from '../../components/timeline'
-import Styles from './styles'
+import './index.css'
 
-class Main extends PureComponent {
-	async componentDidMount () {
-		const { user, addToots } = this.props
+const components = {
+	timeline: Timeline
+}
 
-		if (user) {
-			try {
-				const [home, local, federated] = await fetchAllTheToots(user.oauth)
-				addToots({
-					home,
-					local,
-					federated
-				})
-			} catch (e) {
-				console.info("Handle error properly", e)
-			}
-		}
-	}
+class Main extends Component {
 
 	render () {
-		const {
-			t,
-			tootsHome,
-			tootsLocal,
-			tootsFederated
-		} = this.props
+		const { layout, currentAccount, match } = this.props
+		const columns = [
+			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} />,
+			...layout.map((column) => {
+				const Component = components[column.component]
+				return <Component {...column} />
+			})
+		]
 
-		const isLoading = Boolean(tootsHome.length) === false
-
-		if (isLoading) {
-			return <div>
-				{t('loading')}
-			</div>
-		}
-
-		return <main style={Styles.main}>
-			<Timeline name="home" toots={tootsHome} />
-			<Timeline name="local" toots={tootsLocal} />
-			<Timeline name="federated" toots={tootsFederated} />
+		return <main className="main">
+			{columns}
 		</main>
 	}
 }
 
 Main.propTypes = {
-	user : PropTypes.object.isRequired,
-	tootsHome : PropTypes.array.isRequired,
-	tootsLocal : PropTypes.array.isRequired,
-	tootsFederated : PropTypes.array.isRequired,
-	addToots : PropTypes.func.isRequired
+	currentAccount: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
 	const { selected, accounts } = state.users
 
 	return {
-		user : accounts[selected],
-		tootsHome : state.timelines.home.items.map(id => state.toots[id]),
-		tootsLocal : state.timelines.local.items.map(id => state.toots[id]),
-		tootsFederated : state.timelines.federated.items.map(id => state.toots[id])
+		layout: state.config.layout,
+		currentAccount: accounts[selected]
 	}
 }
 
-const dispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		addToots : (toots) => {
-			return dispatch(addTootsAction(toots))
+		saveLayout : (layout) => {
+			return dispatch(saveLayoutAction(layout))
 		}
 	}
 }
 
 const translated = translate()(Main)
-const connected = connect(mapStateToProps, dispatchToProps)(translated)
+const connected = connect(mapStateToProps, mapDispatchToProps)(translated)
 const routed = withRouter(connected)
 
 export default routed
