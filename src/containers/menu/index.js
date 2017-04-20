@@ -42,6 +42,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-const connected = connect(mapStateToProps)(Menu)
+const translated = translate()(Menu)
+const connected = connect(mapStateToProps)(translated)
 const routed = withRouter(connected)
-export default translate(routed)()
+
+export default routed
