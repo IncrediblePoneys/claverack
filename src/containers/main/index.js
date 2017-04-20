@@ -17,12 +17,11 @@ class Main extends Component {
 
 	render () {
 		const { layout, currentAccount, match } = this.props
-		let key = 0
 		const columns = [
-			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} key={key} />,
-			...layout.map((column) => {
+			<Timeline type={match.params.component} accountUrl={currentAccount.user.url} key={'main'} />,
+			...layout.map((column, index) => {
 				const Component = components[column.component]
-				return <Component key={++key} {...column} />
+				return <Component key={index} {...column} />
 			})
 		]
 
