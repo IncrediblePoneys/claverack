@@ -101,8 +101,11 @@ export async function verify (oauth, instance = INSTANCE) {
  * @return {Object[]} A list of toots
  */
 export async function timeline(oauth, route, instance = INSTANCE) {
+	const routes = {
+		federated: 'public?local=true'
+	}
 	return await GET(
-		`api/v1/timelines/${route}`,
+		`api/v1/timelines/${routes[route] || route}`,
 		instance,
 		oauth
 	)
