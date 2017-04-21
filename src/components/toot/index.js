@@ -1,27 +1,34 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { translate } from 'react-i18next'
 
 import { avatarUrl } from '../../utils/parser'
 import './styles.css'
 
 class Toot extends Component {
 	render() {
-		const { account, reblog, content, created_at } = this.props
-		const tootContent = (reblog && reblog.content) || content
-
-		const avatar = avatarUrl(account)
+		const { t } = this.props
+		const isReblog = this.props.reblog && this.props.reblog.content
+		const toot = isReblog ? this.props.reblog : this.props
+		const avatar = avatarUrl(toot.account)
 
 		return <section className="toot">
 			<div className="toot-avatar">
-				<img src={avatar} alt={account.acct} /> 
+				<img src={avatar} alt={toot.account.acct} />
 			</div>
 
 			<div>
 				<div className="toot-information">
-					<a href="#" className="toot-author">{account.acct}</a> 
-					<span className="toot-date">{created_at}</span>
+					{isReblog &&
+						<div className="toot-reblogger">
+							<a href="#">{this.props.account.acct}</a>
+							<span> {t('reblogged')}</span>
+						</div>
+					}
+					<a href="#" className="toot-author">{toot.account.acct}</a>
+					<span className="toot-date">{toot.created_at}</span>
 				</div>
-				<div className="toot-content" dangerouslySetInnerHTML={{ __html: tootContent }}></div>
+				<div className="toot-content" dangerouslySetInnerHTML={{ __html: toot.content }}></div>
 			</div>
 		</section>
 	}
@@ -42,4 +49,4 @@ Toot.propTypes = {
 	reblog: PropTypes.shape(toot),
 }
 
-export default Toot
+export default translate()(Toot)
