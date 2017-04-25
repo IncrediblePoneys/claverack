@@ -6,6 +6,23 @@ import { avatarUrl } from '../../utils/parser'
 import './styles.css'
 
 class Toot extends Component {
+	handleTootClick (e) {
+		const { shell } = window.require('electron')
+
+		e.preventDefault()
+		const target = e.target
+		const parentElement = e.target.parentElement
+		// This is ugly as hell
+		// And maybe overprotective but well ... damn you weird format
+		const isTootLink = target.tagName === 'SPAN'
+			&& (target.classList.value === 'ellipsis' || target.classList.value === 'invisible')
+			&& parentElement.tagName === 'A'
+
+		if (isTootLink) {
+			shell.openExternal(parentElement.href)
+		}
+	}
+
 	render() {
 		const { t } = this.props
 		const isReblog = this.props.reblog && this.props.reblog.content
@@ -28,7 +45,7 @@ class Toot extends Component {
 					<a href="#" className="toot-author">{toot.account.acct}</a>
 					<span className="toot-date">{toot.created_at}</span>
 				</div>
-				<div className="toot-content" dangerouslySetInnerHTML={{ __html: toot.content }}></div>
+				<div onClick={this.handleTootClick} className="toot-content" dangerouslySetInnerHTML={{ __html: toot.content }}></div>
 			</div>
 		</section>
 	}

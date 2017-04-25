@@ -7,7 +7,7 @@ import logo from '../../img/logo.png'
 import './index.css'
 
 class Login extends Component {
-	constructor (props) {
+	constructor(props) {
 		super(props)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleInstanceChange = this.handleInstanceChange.bind(this)
@@ -18,7 +18,7 @@ class Login extends Component {
 		}
 	}
 
-	async componentDidMount () {
+	async componentDidMount() {
 		const instances = await getInstances()
 		this.setState({
 			loading: false,
@@ -26,7 +26,7 @@ class Login extends Component {
 		})
 	}
 
-	async handleInstanceChange (event) {
+	async handleInstanceChange(event) {
 		const { registerAppForInstance } = this.props
 		const instance = event.target.value
 
@@ -37,7 +37,7 @@ class Login extends Component {
 		}
 	}
 
-	handleSubmit (e) {
+	handleSubmit(e) {
 		e.preventDefault()
 		if (!this.state.canLogin) {
 			return
@@ -47,7 +47,31 @@ class Login extends Component {
 		onLogin(new FormData(e.target))
 	}
 
-	render () {
+	displayLoginFields() {
+		const { t } = this.props
+
+		return <div>
+			<p>
+				<label htmlFor="email">
+					{t('Email')}
+				</label>
+				<input id="email" type="text" name="username" />
+			</p>
+			<p>
+				<label htmlFor="password">
+					{t('password')}
+				</label>
+				<input id="password" type="password" name="password" />
+			</p>
+			<p className="login-submit">
+				<button type="submit">
+					{t('submit')}
+				</button>
+			</p>
+		</div>
+	}
+
+	render() {
 		const { t } = this.props
 		const { loading, instances } = this.state
 
@@ -57,47 +81,29 @@ class Login extends Component {
 			</div>
 		}
 
-		return 	<div className="login">
-					<div className="login-wrapper">
-						<h3 className="login-title">Claverack</h3>
-						<img className="login-logo" src={logo} alt="Logo" />
-						<form onSubmit={this.handleSubmit}>
-							<p>
-								<label htmlFor="instance">
-									{t('instance')}
-								</label>
-								<select onChange={this.handleInstanceChange} name="instance" id="instances">
-									<option value="">{t('pickone')}</option>
-									{instances.map((instance, index) => {
-										return <option key={index}>
-											{instance}
-										</option>
-									})}
-								</select>
-							</p>
-							{this.state.canLogin && <div>
-									<p>
-										<label htmlFor="email">
-											{t('Email')}
-										</label>
-										<input id="email" type="text" name="username" />
-									</p>
-									<p>
-										<label htmlFor="password">
-											{t('password')}
-										</label>
-										<input id="password" type="password" name="password" />
-									</p>
-									<p className="login-submit">
-										<button type="submit">
-											{t('submit')}
-										</button>
-									</p>
-								</div>
-							}
-						</form>
-					</div>
-				</div>
+		return <div className="login">
+			<div className="login-wrapper">
+				<h3 className="login-title">Claverack</h3>
+				<img className="login-logo" src={logo} alt="Logo" />
+				<form onSubmit={this.handleSubmit}>
+					<p>
+						<label htmlFor="instance">
+							{t('instance')}
+						</label>
+						<select onChange={this.handleInstanceChange} name="instance" id="instances">
+							<option value="">{t('pickone')}</option>
+							{instances.map((instance, index) => {
+								return <option key={index}>
+									{instance}
+								</option>
+							})}
+						</select>
+					</p>
+
+					{this.state.canLogin && this.displayLoginFields()}
+				</form>
+			</div>
+		</div>
 	}
 }
 

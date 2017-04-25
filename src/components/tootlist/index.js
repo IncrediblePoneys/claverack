@@ -6,13 +6,13 @@ import './styles.css'
 
 class Tootlist extends PureComponent {
 	componentWillUpdate () {
-		this.scrollHeight = this.div.scrollHeight;
-		this.scrollTop = this.div.scrollTop;
+		this.scrollHeight = this.div.scrollHeight
+		this.scrollTop = this.div.scrollTop
 	}
- 
+
 	componentDidUpdate () {
 		if (this.scrollTop !== 0) {
-			this.div.scrollTop = this.scrollTop + (this.div.scrollHeight - this.scrollHeight);
+			this.div.scrollTop = this.scrollTop + (this.div.scrollHeight - this.scrollHeight)
 		}
 	}
 

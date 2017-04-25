@@ -14,7 +14,6 @@ const components = {
 }
 
 class Main extends Component {
-
 	render () {
 		const { layout, currentAccount, match } = this.props
 		const columns = [
